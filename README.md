@@ -21,8 +21,9 @@ This project requires Python 2.7 with the following packages:
  - pygame
  - python-dotenv
 
-**IMPORTANT:** SDL 2.x and SDL 1.2.15-10 have some serious incompatibilities with touchscreen. You can force SDL 1.2 by ~~running a script: https://learn.adafruit.com/adafruit-pitft-28-inch-resistive-touchscreen-display-raspberry-pi/pitft-pygame-tips#ensure-you-are-running-sdl-1-dot-2~~ Update: script no longer works.
-New solution was originally published in english here: https://www.raspberrypi.org/forums/viewtopic.php?t=250001. Instructions are gone over below.
+**IMPORTANT:** SDL 2.x and SDL 1.2.15-10 have some serious incompatibilities with touchscreen. You can force SDL 1.2 by ~~running a script: https://learn.adafruit.com/adafruit-pitft-28-inch-resistive-touchscreen-display-raspberry-pi/pitft-pygame-tips#ensure-you-are-running-sdl-1-dot-2~~
+
+Update: script no longer works. New solution was originally published in english here: https://www.raspberrypi.org/forums/viewtopic.php?t=250001. Instructions are gone over below.
 
 # Instructions
 
