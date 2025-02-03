@@ -100,12 +100,12 @@ class UI:
         # Process touchscreen input
         from alarmpanel.button import STATE_PRESSED
         for event in pygame.event.get():
-            if event.type is pygame.MOUSEBUTTONDOWN:
-                pos = pygame.mouse.get_pos()
+            if event.type == 1792 and (event.y != 0 and event.x != 0):
+                pos = (event.y*self._screen.get_width(), (1-event.x)*self._screen.get_height())
                 for b in self._buttons:
                     if b.down(pos): break
-            elif event.type is pygame.MOUSEBUTTONUP:
-                pos = pygame.mouse.get_pos()
+            elif event.type == 1793 and (event.y != 0 and event.x != 0):
+                pos = (event.y*self._screen.get_width(), (1-event.x)*self._screen.get_height())
                 for b in self._buttons:
                     if b.up(pos): pass
                     # Redraw other buttons which might be stuck in the down position
