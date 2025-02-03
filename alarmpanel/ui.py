@@ -11,7 +11,7 @@ class UI:
     def __init__(self, background = None):
         # Init framebuffer/touchscreen environment variables
         os.putenv('SDL_VIDEODRIVER', 'fbcon')
-        os.putenv('SDL_FBDEV', '/dev/fb1')
+        os.putenv('SDL_FBDEV', '/dev/fb0')
         os.putenv('SDL_MOUSEDRV', 'TSLIB')
         os.putenv('SDL_MOUSEDEV', '/dev/input/touchscreen')
 
@@ -24,7 +24,7 @@ class UI:
         print("Setting Mouse invisible...")
         pygame.mouse.set_visible(False)
         print("Setting fullscreen...")
-        modes = pygame.display.list_modes(16)
+        modes = pygame.display.list_modes()
         self._screen = pygame.display.set_mode(modes[0], pygame.FULLSCREEN, 16)
         self._needs_update = True
 
