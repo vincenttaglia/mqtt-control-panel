@@ -28,6 +28,8 @@ MQTT_STATE_TOPIC = os.environ.get('MQTT_STATE_TOPIC', 'home/alarm')
 MQTT_COMMAND_TOPIC = os.environ.get('MQTT_COMMAND_TOPIC', 'home/alarm/set')
 PIR_GPIO_PIN = os.environ.get('PIR_GPIO_PIN', None)
 
+pygame.init()
+
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
 pin_input_string = ''
@@ -201,7 +203,8 @@ def on_disconnect(client, userdata, rc):
 
 def on_message(client, userdata, message):
     global current_state, pending_state
-    current_state = message.payload
+    states = {"b'disarmed'":"Disarmed","b'pending'":"Pending","b'armed_away'":"Armed Away","b'armed_home'":"Armed Home"}
+    current_state = states[str(message.payload)]
 
     print("received payload: " + current_state)
 
@@ -222,7 +225,7 @@ def on_message(client, userdata, message):
     # Update the other button states
     update_action_button_states()
 
-client = mqtt.Client(MQTT_CLIENT_ID)
+client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION1, MQTT_CLIENT_ID)
 client.on_connect = on_connect
 client.on_message = on_message
 client.username_pw_set(MQTT_USER, MQTT_PASS)
