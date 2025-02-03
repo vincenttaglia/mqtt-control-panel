@@ -41,7 +41,10 @@ connected = False
 def on_button_press(n):
     global pin_input_string, client, pending_state
 
-    print(n)
+    if type(n) is int:
+        print("Number Press")
+    else:
+        print(n)
 
     # Numeric buttons
     if n < 10:
