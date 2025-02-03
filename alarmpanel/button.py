@@ -30,7 +30,7 @@ class Button(object):
         self.callback = None  # Callback function
         self.value = None  # Value passed to callback
         self.state = 0
-        for key, value in kwargs.iteritems():
+        for key, value in kwargs.items():
             if key == 'imageFiles':
                 self.imageFiles = value
             elif key == 'cb':
@@ -45,7 +45,7 @@ class Button(object):
 
     def down(self, pos):
         if self.selected(pos):
-            if self.state == STATE_DEFAULT and self.bitmaps.has_key(STATE_PRESSED):
+            if self.state == STATE_DEFAULT and STATE_PRESSED in self.bitmaps:
                 self.set_state(STATE_PRESSED)
 
             if self.callback:

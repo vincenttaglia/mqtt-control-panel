@@ -19,11 +19,11 @@ class UI:
         self.on()
 
         # Init pygame and screen
-        print "Initting..."
+        print("Initting...")
         pygame.init()
-        print "Setting Mouse invisible..."
+        print("Setting Mouse invisible...")
         pygame.mouse.set_visible(False)
-        print "Setting fullscreen..."
+        print("Setting fullscreen...")
         modes = pygame.display.list_modes(16)
         self._screen = pygame.display.set_mode(modes[0], pygame.FULLSCREEN, 16)
         self._needs_update = True
@@ -65,7 +65,7 @@ class UI:
 
         button = Button(self, rect, **kwargs)
 
-        for buttonState, imageFile in button.imageFiles.iteritems():  # For each image name defined on the button...
+        for buttonState, imageFile in button.imageFiles.items():  # For each image name defined on the button...
             for image in self._images:  # For each icon...
                 if imageFile == image.name:  # Compare names; match?
                     button.bitmaps[buttonState] = image.bitmap  # Assign Icon to Button
@@ -114,14 +114,14 @@ class UI:
 
     def off(self):
         if self._backlight_on:
-            print "Turning display off"
+            print("Turning display off")
             with open(BACKLIGHT_CONTROL, 'w') as f:
                 f.write('0')
             self._backlight_on = False
 
     def on(self):
         if not self._backlight_on:
-            print "Turning display on"
+            print("Turning display on")
             with open(BACKLIGHT_CONTROL, 'w') as f:
                 f.write('1')
             self._backlight_on = True

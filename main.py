@@ -39,7 +39,7 @@ connected = False
 def on_button_press(n):
     global pin_input_string, client, pending_state
 
-    print n
+    print(n)
 
     # Numeric buttons
     if n < 10:
@@ -86,7 +86,7 @@ def on_button_press(n):
 
 
 def signal_handler(signal, frame):
-    print 'got SIGTERM'
+    print('got SIGTERM')
     pygame.quit()
     client.loop_stop()
     client.disconnect()
@@ -107,8 +107,8 @@ def clear_input():
 def update_action_button_states():
     inactive_state = STATE_AVAILABLE if pin_input_string in PINS else STATE_DEFAULT
 
-    print "pending: " + pending_state
-    print "state: " + current_state
+    print("pending: " + pending_state)
+    print("state: " + current_state)
 
     btnDisarm.set_state(STATE_ACTIVE if current_state == 'disarmed' or pending_state == 'disarmed' else inactive_state)
     btnArmHome.set_state(STATE_ACTIVE if current_state == 'armed_home' or pending_state == 'armed_home' else inactive_state)
@@ -161,32 +161,32 @@ def on_connect(client, userdata, flags, rc):
     global connected, pending_state, status_line_1
     pending_state = ''
     if rc == 0:
-        print 'MQTT connection successful'
+        print('MQTT connection successful')
         status_line_1.set('Connected')
         connected = True
         client.subscribe(MQTT_STATE_TOPIC, 2)
     elif rc == 1:
-        print 'MQTT connection refused - incorrect protocol version'
+        print('MQTT connection refused - incorrect protocol version')
         status_line_1.set('Connection refused - incorrect protocol version')
         connected = False
     elif rc == 2:
-        print 'MQTT connection refused - invalid client identifier'
+        print('MQTT connection refused - invalid client identifier')
         status_line_1.set('Connection refused - invalid client identifier')
         connected = False
     elif rc == 3:
-        print 'MQTT connection refused - server unavailable'
+        print('MQTT connection refused - server unavailable')
         status_line_1.set('Connection refused - server unavailable')
         connected = False
     elif rc == 4:
-        print 'MQTT connection refused - bad username or password'
+        print('MQTT connection refused - bad username or password')
         status_line_1.set('Connection refused - invalid credentials')
         connected = False
     elif rc == 5:
-        print 'MQTT connection refused - not authorized'
+        print('MQTT connection refused - not authorized')
         status_line_1.set('Connection refused - not authorized')
         connected = False
     else:
-        print 'Unknown connection error: code ' + str(rc)
+        print('Unknown connection error: code ' + str(rc))
         status_line_1.set('Unknown connection error: ' + str(rc))
         connected = False
 
@@ -203,7 +203,7 @@ def on_message(client, userdata, message):
     global current_state, pending_state
     current_state = message.payload
 
-    print "received payload: " + current_state
+    print("received payload: " + current_state)
 
     # HA will send `pending` or `triggered` when the state is about to change
     # In these cases, we can't be 100% sure what the next state will be
@@ -233,7 +233,7 @@ signal.signal(signal.SIGTERM, signal_handler)
 ui.update()
 client.loop_start()
 
-print "mainloop.."
+print("mainloop..")
 while True:
 
     if connected:
@@ -246,7 +246,7 @@ while True:
         try:
             client.reconnect()
         except:
-            print "MQTT reconnect failed. Retrying..."
+            print("MQTT reconnect failed. Retrying...")
 
     if PIR_GPIO_PIN:
         motion.check()
