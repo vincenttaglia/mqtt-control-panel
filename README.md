@@ -29,6 +29,7 @@ This project requires Python 3 with the following packages:
 
     ```
     sudo apt update && sudo apt upgrade
+
     sudo apt install python3-pip
     ```
 
@@ -97,13 +98,17 @@ This project requires Python 3 with the following packages:
 
 4. Configure the control panel
 
-    `cp .env.dist .env`
+    ```
+    cp .env.dist .env
     
-    `nano .env`
+    nano .env
+    ```
 
 7. Test control panel
 
-    `python3 main.py`
+    ```
+    python3 main.py
+    ```
 
 
 8. Set application to start on boot (optional)
@@ -119,7 +124,6 @@ This project requires Python 3 with the following packages:
     ```
     But I was having trouble getting rc.local to start the program correctly at boot. I was able to get it to work consistently with a custom service though:
     ```
-    sudo nano /lib/systemd/system/alarmpanel.service
     echo "[Unit]
     Description=Alarm Panel
     After=multi-user.target
@@ -133,13 +137,12 @@ This project requires Python 3 with the following packages:
     ExecStart=/bin/bash -c 'source $(pwd)/.venv/bin/activate && $(pwd)/.venv/bin/python3 $(pwd)/main.py'
     ExecStartPre=/bin/sleep 10
     [Install]
-    WantedBy=default.target" | sudo tee /lib/systemd/system/alarmpanel.service
+    WantedBy=default.target" | sudo tee /lib/systemd/system/alarm-panel.service
     ```
-    Reload the daemon and enable the service to start at boot, then start the service.
+    Reload the daemon and enable the service to start at boot.
     ```
     sudo systemctl daemon-reload
-    sudo systemctl enable alarmpanel.service
-    sudo systemctl start alarmpanel.service
+    sudo systemctl enable alarm-panel.service
     ```
 
 9. Reboot
