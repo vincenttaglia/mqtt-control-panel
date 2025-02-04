@@ -206,7 +206,7 @@ def on_disconnect(client, userdata, rc):
 
 def on_message(client, userdata, message):
     global current_state, pending_state
-    states = {"b'disarmed'":"Disarmed","b'pending'":"Pending","b'armed_away'":"Armed Away","b'armed_home'":"Armed Home"}
+    states = {"b'disarmed'":"Disarmed","b'pending'":"Pending","b'armed_away'":"Armed Away","b'armed_home'":"Armed Home","b'triggered'":"Alarm Triggered"}
     current_state = states[str(message.payload)]
 
     print("received payload: " + current_state)
