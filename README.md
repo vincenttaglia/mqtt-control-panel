@@ -108,12 +108,38 @@ This project requires Python 3 with the following packages:
 
 8. Set application to start on boot (optional)
 
+    Normally on a Pi, I would use rc.local like this:
+
     ```
     echo "#!/bin/sh -e
-    $(pwd)/.venv/bin/python3 $(pwd)/main.py &
+    source $(pwd)/.venv/bin/activate && $(pwd)/.venv/bin/python3 $(pwd)/main.py &
     exit 0" | sudo tee /etc/rc.local
 
     sudo chmod +x /etc/rc.local
+    ```
+    But I was having trouble getting rc.local to start the program correctly at boot. I was able to get it to work consistently with a custom service though:
+    ```
+    sudo nano /lib/systemd/system/alarmpanel.service
+    echo "[Unit]
+    Description=Alarm Panel
+    After=multi-user.target
+    Wants=multi-user.target
+    [Service]
+    User=root
+    Group=root
+    Type=simple
+    Restart=always
+    RestartSec=5
+    ExecStart=/bin/bash -c 'source $(pwd)/.venv/bin/activate && $(pwd)/.venv/bin/python3 $(pwd)/main.py'
+    ExecStartPre=/bin/sleep 10
+    [Install]
+    WantedBy=default.target" | sudo tee /lib/systemd/system/alarmpanel.service
+    ```
+    Reload the daemon and enable the service to start at boot, then start the service.
+    ```
+    sudo systemctl daemon-reload
+    sudo systemctl enable alarmpanel.service
+    sudo systemctl start alarmpanel.service
     ```
 
 9. Reboot
