@@ -127,8 +127,8 @@ ui = UI('images/bg.png')
 ui.load_images('images')
 
 # Create the two status line elements
-status_line_1 = ui.create_status_line((24, 4, 480 - 24, 24))
-status_line_2 = ui.create_status_line((24, 34, 480 - 24, 24))
+status_line_1 = ui.create_status_line((24, 4, 480 - 24, 30))
+status_line_2 = ui.create_status_line((24, 34, 480 - 24, 30))
 status_line_1.set('Starting up...')
 
 # Create the PIN input buttons
